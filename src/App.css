@@ -23,7 +23,7 @@ body {
   --surface: #ffffff;
   --text-primary: #1f2937;
   --text-secondary: #4b5563;
-  --border: #e5e7eb;
+  --border: #606e84;
   --accent: #2563eb;
   --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.06);
   --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -34,7 +34,7 @@ body {
   --surface: #020617;
   --text-primary: #e5e7eb;
   --text-secondary: #94a3b8;
-  --border: #1e293b;
+  --border: #606e84;
   --accent: #60a5fa;
   --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.4);
   --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.5);
@@ -186,9 +186,8 @@ a:hover {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; /* 👈 LEFT ALIGN */
-  gap: 16px;
-  margin-top: 12px;
+  justify-content: center;
+  gap: 32px;
 }
 
 .contact a {
@@ -218,6 +217,40 @@ a:hover {
   cursor: pointer;
 }
 
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f172a;
+  padding: 16px 20px;
+}
+
+.logo {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nav-menu {
+  display: flex;
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+/* Hamburger */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
 
 /* Desktop refinement */
 @media (min-width: 900px) {
@@ -235,3 +268,28 @@ a:hover {
   }
 }
 
+/* Mobile */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 64px;
+    right: 0;
+    width: 100%;
+    background: #0f172a;
+    text-align: center;
+  }
+
+  .nav-menu.open {
+    display: block;
+  }
+
+  .nav-menu a {
+    display: block;
+    padding: 14px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
