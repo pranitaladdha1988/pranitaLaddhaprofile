@@ -7,9 +7,9 @@ export const translations = {
     header: {
       title: "Pranita Laddha",
       subtitle: "Principal Frontend Architect | Enterprise & AI-Enabled Platforms",
-      email: "📧 laddha.pranita1988@gmail.com",
-      phone: "📞 +91 9623243042",
-      linkedin: "🔗 linkedin.com/in/pranita-laddha-2a035b94",
+      email: "laddha.pranita1988@gmail.com",
+      phone: "+91 9623243042",
+      linkedin: "linkedin.com/in/pranita-laddha-2a035b94",
       themeToggle: {
         light: "🌙",
         dark: "☀️"
@@ -152,9 +152,9 @@ export const translations = {
     header: {
       title: "प्रणीता लद्धा",
       subtitle: "प्रिंसिपल फ्रंटएंड आर्किटेक्ट | एंटरप्राइज और एआई-सक्षम प्लेटफॉर्म",
-      email: "📧 laddha.pranita1988@gmail.com",
-      phone: "📞 +91 9623243042",
-      linkedin: "🔗 linkedin.com/in/pranita-laddha-2a035b94",
+      email: "laddha.pranita1988@gmail.com",
+      phone: "+91 9623243042",
+      linkedin: "linkedin.com/in/pranita-laddha-2a035b94",
       themeToggle: {
         light: "🌙",
         dark: "☀️"

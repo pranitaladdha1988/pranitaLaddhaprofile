@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import { ChatbotContext } from "../context/ChatbotContext";
 import { LanguageContext } from "../context/LanguageContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Chatbot.css";
 
 export default function Chatbot({ isFloating = false }) {
@@ -61,7 +63,7 @@ export default function Chatbot({ isFloating = false }) {
                 onClick={() => setIsOpen(false)}
                 aria-label="Close chat"
               >
-                ✕
+                <FontAwesomeIcon icon={faTimes} style={{ fontSize: "16px" }} />
               </button>
             </div>
             
@@ -93,7 +95,7 @@ export default function Chatbot({ isFloating = false }) {
             onClick={() => setIsOpen(true)}
             aria-label="Open chat"
           >
-            💬
+            <FontAwesomeIcon icon={faComment} style={{ fontSize: "16px" }} />
           </button>
         )}
       </div>

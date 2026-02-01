@@ -23,19 +23,23 @@ body {
   --surface: #ffffff;
   --text-primary: #1f2937;
   --text-secondary: #4b5563;
-  --border: #606e84;
-  --accent: #2563eb;
+  --border: #e5e7eb;
+  --accent-primary: #667eea;
+  --accent-secondary: #764ba2;
+  --accent-light: rgba(102, 126, 234, 0.1);
   --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.06);
   --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="dark"] {
   --bg: #0f172a;
-  --surface: #020617;
+  --surface: #1a2a4a;
   --text-primary: #e5e7eb;
   --text-secondary: #94a3b8;
-  --border: #606e84;
-  --accent: #60a5fa;
+  --border: #2d3748;
+  --accent-primary: #667eea;
+  --accent-secondary: #764ba2;
+  --accent-light: rgba(102, 126, 234, 0.15);
   --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.4);
   --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
@@ -89,7 +93,11 @@ section {
 
 h1 {
   font-size: clamp(1.6rem, 5vw, 2.4rem);
-  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
 }
 
 h2 {
@@ -115,12 +123,13 @@ li {
 ========================= */
 
 a {
-  color: var(--accent);
+  color: var(--accent-primary);
   text-decoration: none;
   font-weight: 500;
 }
 
 a:hover {
+  color: var(--accent-secondary);
   text-decoration: underline;
 }
 
@@ -131,11 +140,35 @@ a:hover {
 .card,
 .skill-block {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 2px solid transparent;
   border-radius: 12px;
   padding: clamp(14px, 4vw, 20px);
   margin-top: 12px;
   box-shadow: var(--shadow-medium);
+  background-clip: padding-box;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card::before,
+.skill-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.card:hover,
+.skill-block:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
 }
 
 /* =========================
@@ -166,16 +199,23 @@ a:hover {
 ========================= */
 
 .theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  padding: 6px 12px;
-  border-radius: 8px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent-primary);
+  border: none;
+  color: white;
+  border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
-  background: var(--border);
+  background: var(--accent-secondary);
+  transform: scale(1.1);
 }
 
 /* =========================
@@ -192,8 +232,29 @@ a:hover {
 
 .contact a {
   font-size: 0.95rem;
-  color: var(--accent);
+  color: var(--accent-primary);
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.contact a:hover {
+  color: var(--accent-secondary);
+}
+
+.contact a .icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-primary);
+  color: white;
+  border-radius: 50%;
+  flex-shrink: 0;
+  padding: 10px;
 }
 
 /* =========================
@@ -206,30 +267,47 @@ a:hover {
   left: 16px;
   z-index: 1000;
 
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  border: none;
+  color: white;
 
-  padding: 8px 14px;
+  padding: 20px 20px;
   border-radius: 999px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fixed-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
 }
 
 /* Navbar */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  background: #0f172a;
   padding: 16px 20px;
+  gap: 12px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
 }
 
 .logo {
-  color: white;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.logo a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .nav-menu {
@@ -237,19 +315,29 @@ a:hover {
 }
 
 .nav-menu a {
-  color: white;
   text-decoration: none;
   font-size: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.nav-menu a:hover {
+  opacity: 0.8;
 }
 
 /* Hamburger */
 .menu-toggle {
   display: none;
-  font-size: 1.8rem;
+  width: 35px;
+  height: 35px;
   background: none;
   border: none;
-  color: white;
   cursor: pointer;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: var(--accent-primary);
 }
 
 /* Desktop refinement */
@@ -264,7 +352,6 @@ a:hover {
   .fixed-toggle {
     bottom: 12px;
     left: 12px;
-    padding: 10px 16px;
   }
 }
 
@@ -272,21 +359,52 @@ a:hover {
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
-    position: absolute;
-    top: 64px;
+    position: fixed;
+    top: 0;
+    left: 0;
     right: 0;
-    width: 100%;
-    background: #0f172a;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--surface);
     text-align: center;
+    padding: 20px;
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
   }
 
   .nav-menu.open {
-    display: block;
+    display: flex;
   }
 
   .nav-menu a {
     display: block;
-    padding: 14px 0;
+    padding: 20px;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+  }
+
+  .close-menu-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+  }
+
+  .close-menu-btn:hover {
+    color: var(--accent-primary);
   }
 
   .menu-toggle {

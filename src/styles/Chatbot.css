@@ -25,23 +25,23 @@
 }
 
 .close-btn {
-  background: none;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.3);
   border: none;
   color: white;
-  font-size: 1.5em;
+  border-radius: 50%;
   cursor: pointer;
   padding: 0;
-  width: 30px;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.15);
 }
 
 .chatbot-messages {
@@ -140,13 +140,13 @@
 }
 
 .chatbot-toggle {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  font-size: 28px;
+  font-size: 16px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   transition: all 0.3s ease;
