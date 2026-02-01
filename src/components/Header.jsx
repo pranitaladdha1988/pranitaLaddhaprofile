@@ -1,22 +1,25 @@
+import { useContext } from "react";
 import { useTheme } from "../theme/ThemeContext";
+import { LanguageContext } from "../context/LanguageContext";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useContext(LanguageContext);
 
   return (
     <header className="header">
       {/* Centered block */}
       <div className="header-center">
-        <h1>Pranita Laddha</h1>
+        <h1>{t("header.title")}</h1>
         <p className="title">
-          Principal Frontend Architect | Enterprise & AI-Enabled Platforms
+          {t("header.subtitle")}
         </p>
       </div>
 
       {/* Top right toggle */}
       <div className="header-top">
         <button className="theme-toggle fixed-toggle" onClick={toggleTheme}>
-          {theme === "light" ? "🌙" : "☀️"}
+          {theme === "light" ? t("header.themeToggle.light") : t("header.themeToggle.dark")}
         </button>
 
       </div>
@@ -24,11 +27,11 @@ export default function Header() {
       {/* Left aligned contact */}
       <div className="contact">
         <a href="mailto:laddha.pranita1988@gmail.com">
-          📧 laddha.pranita1988@gmail.com
+          {t("header.email")}
         </a>
 
         <a href="tel:+919623243042">
-          📞 +91 9623243042
+          {t("header.phone")}
         </a>
 
         <a
@@ -36,7 +39,7 @@ export default function Header() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          🔗 linkedin.com/in/pranita-laddha-2a035b94
+          {t("header.linkedin")}
         </a>
       </div>
     </header>

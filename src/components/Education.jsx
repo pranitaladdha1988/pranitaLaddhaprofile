@@ -1,10 +1,15 @@
+import { useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
+
 export default function Education() {
+  const { t } = useContext(LanguageContext);
+  
   return (
     <section>
-      <h2>Education</h2>
+      <h2>{t("education.title")}</h2>
       <div className="card">
-        <h3>Bachelor of Engineering (Computer Engineering)</h3>
-        <p>Pune University</p>
+        <h3>{t("education.degree")}</h3>
+        <p>{t("education.university")}</p>
       </div>
     </section>
   );

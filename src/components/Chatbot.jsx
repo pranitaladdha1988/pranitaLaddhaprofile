@@ -1,14 +1,21 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ChatbotContext } from "../context/ChatbotContext";
+import { LanguageContext } from "../context/LanguageContext";
 import "../styles/Chatbot.css";
 
 export default function Chatbot({ isFloating = false }) {
-  const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hello! I'm an AI chatbot. How can I help you today?" }
-  ]);
+  const { t } = useContext(LanguageContext);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { isOpen, setIsOpen } = useContext(ChatbotContext);
+
+  // Initialize messages when component mounts or language changes
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([{ role: "assistant", content: t("chatbot.hello") }]);
+    }
+  }, [t]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -27,7 +34,7 @@ export default function Chatbot({ isFloating = false }) {
       // For now, using a placeholder response
       const assistantMessage = {
         role: "assistant",
-        content: "I'm a placeholder response. Connect me to an AI API to provide real responses!"
+        content: t("chatbot.error")
       };
       
       setMessages((prev) => [...prev, assistantMessage]);
@@ -35,7 +42,7 @@ export default function Chatbot({ isFloating = false }) {
       console.error("Error:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Sorry, I encountered an error. Please try again." }
+        { role: "assistant", content: t("chatbot.error") }
       ]);
     } finally {
       setLoading(false);
@@ -48,7 +55,7 @@ export default function Chatbot({ isFloating = false }) {
         {isOpen ? (
           <div className="chatbot-container floating-open">
             <div className="chatbot-header">
-              <h2>AI Assistant</h2>
+              <h2>{t("chatbot.title")}</h2>
               <button 
                 className="close-btn"
                 onClick={() => setIsOpen(false)}
@@ -64,7 +71,7 @@ export default function Chatbot({ isFloating = false }) {
                   <p>{msg.content}</p>
                 </div>
               ))}
-              {loading && <div className="message assistant"><p>Thinking...</p></div>}
+              {loading && <div className="message assistant"><p>{t("chatbot.thinking")}</p></div>}
             </div>
 
             <form onSubmit={handleSendMessage} className="chatbot-form">
@@ -72,11 +79,11 @@ export default function Chatbot({ isFloating = false }) {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message..."
+                placeholder={t("chatbot.placeholder")}
                 disabled={loading}
               />
               <button type="submit" disabled={loading}>
-                {loading ? "..." : "Send"}
+                {loading ? t("chatbot.sending") : t("chatbot.send")}
               </button>
             </form>
           </div>
@@ -96,7 +103,7 @@ export default function Chatbot({ isFloating = false }) {
   return (
     <section className="chatbot-container">
       <div className="chatbot-header">
-        <h2>AI Chat Assistant</h2>
+        <h2>{t("chatbot.title")}</h2>
       </div>
       
       <div className="chatbot-messages">
@@ -105,7 +112,7 @@ export default function Chatbot({ isFloating = false }) {
             <p>{msg.content}</p>
           </div>
         ))}
-        {loading && <div className="message assistant"><p>Thinking...</p></div>}
+        {loading && <div className="message assistant"><p>{t("chatbot.thinking")}</p></div>}
       </div>
 
       <form onSubmit={handleSendMessage} className="chatbot-form">
@@ -113,11 +120,11 @@ export default function Chatbot({ isFloating = false }) {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
+          placeholder={t("chatbot.placeholder")}
           disabled={loading}
         />
         <button type="submit" disabled={loading}>
-          {loading ? "Sending..." : "Send"}
+          {loading ? t("chatbot.sending") : t("chatbot.send")}
         </button>
       </form>
     </section>

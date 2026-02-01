@@ -1,51 +1,39 @@
-const skills = [
-  {
-    title: "Frontend Architecture & Platform Ownership",
-    items: [
-      "Angular (1–20), TypeScript, JavaScript (ES6+)",
-      "Modular & scalable frontend system design",
-      "Reusable UI libraries & shared frameworks",
-      "Performance, maintainability & scalability governance",
-      "Angular modernization & upgrade leadership",
-    ],
-  },
-  {
-    title: "AI-Enabled & Analytics-Driven UX",
-    items: [
-      "Frontend design for AI & analytics powered features",
-      "Intelligent discovery & insights-driven workflows",
-      "Explainability-ready UI & user trust considerations",
-      "User behavior analytics (FullStory)",
-    ],
-  },
-  {
-    title: "Cloud, DevOps & Platform Integration",
-    items: [
-      "AWS, Azure, Docker, Kubernetes (hands-on exposure)",
-      "CI/CD pipelines (Jenkins)",
-      "Cloud-aligned frontend architecture",
-      "REST API integration & collaboration",
-    ],
-  },
-  {
-    title: "Leadership, Governance & Delivery",
-    items: [
-      "Architecture reviews & final PR authority",
-      "Agile / Scrum process ownership",
-      "Estimation, release planning & roadmap alignment",
-      "Cross-functional leadership (UI, Backend, DevOps)",
-    ],
-  },
-];
+import { useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
 
 export default function Skills() {
+  const { t } = useContext(LanguageContext);
+  
+  const skillCategories = [
+    {
+      key: "frontendArchitecture",
+      title: t("skills.categories.frontendArchitecture.title"),
+      items: t("skills.categories.frontendArchitecture.items")
+    },
+    {
+      key: "aiAnalytics",
+      title: t("skills.categories.aiAnalytics.title"),
+      items: t("skills.categories.aiAnalytics.items")
+    },
+    {
+      key: "cloudDevops",
+      title: t("skills.categories.cloudDevops.title"),
+      items: t("skills.categories.cloudDevops.items")
+    },
+    {
+      key: "leadership",
+      title: t("skills.categories.leadership.title"),
+      items: t("skills.categories.leadership.items")
+    }
+  ];
+
   return (
     <section>
-      <h2>Core Capabilities</h2>
+      <h2>{t("skills.title")}</h2>
 
       <div className="skills-matrix">
-        {skills.map((group) => (
-          <div className="skill-block" key={group.title}>
+        {skillCategories.map((group) => (
+          <div className="skill-block" key={group.key}>
             <h3>{group.title}</h3>
             <ul>
               {group.items.map((item) => (

@@ -1,23 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t } = useContext(LanguageContext);
 
   return (
     <header className="navbar">
-      <div className="logo"><a href="/">MyWebsite</a></div>
+      <div className="logo"><a href="/">{t("nav.myWebsite")}</a></div>
 
       <nav className={`nav-menu ${open ? "open" : ""}`}>
-        <a href="/ai">AI</a>
+        <a href="/ai">{t("nav.ai")}</a>
       </nav>
 
-      <button
-        className="menu-toggle"
-        onClick={() => setOpen(!open)}
-        aria-label="Toggle menu"
-      >
-        ☰
-      </button>
+      <div className="navbar-right">
+        <LanguageSelector />
+        <button
+          className="menu-toggle"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+      </div>
     </header>
   );
 }

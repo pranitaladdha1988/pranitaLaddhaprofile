@@ -1,12 +1,14 @@
+import { useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
+
 export default function Summary() {
+  const { t } = useContext(LanguageContext);
+  
   return (
     <section>
-      <h2>Professional Summary</h2>
+      <h2>{t("summary.title")}</h2>
       <p>
-        Principal Frontend Architect with 11+ years of experience designing,
-        governing, and scaling enterprise-grade, cloud-native web platforms.
-        Deep expertise in Angular, TypeScript, frontend architecture, platform
-        governance, and AI-enabled, analytics-driven UX.
+        {t("summary.description")}
       </p>
     </section>
   );

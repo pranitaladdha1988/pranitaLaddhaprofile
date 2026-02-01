@@ -1,20 +1,25 @@
+import { useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
+
 export default function Products() {
+  const { t } = useContext(LanguageContext);
+  const projects = t("products.projects");
+
   return (
     <section>
-      <h2>Key Product Experience</h2>
+      <h2>{t("products.title")}</h2>
 
-      <div className="card">
-        <h3>Infoscale / ALTA – Cloud Backup-as-a-Service</h3>
-        <p>
-          Enterprise SaaS platform for multi-cloud data protection (AWS, Azure,
-          GCP).
-        </p>
-        <ul>
-          <li>Frontend architecture for analytics & malware scanning</li>
-          <li>Non-disruptive recovery UX</li>
-          <li>Platform-level UI ownership</li>
-        </ul>
-      </div>
+      {projects.map((project, idx) => (
+        <div className="card" key={idx}>
+          <h3>{project.name}</h3>
+          <p>{project.description}</p>
+          <ul>
+            {project.highlights.map((highlight, hidx) => (
+              <li key={hidx}>{highlight}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </section>
   );
 }

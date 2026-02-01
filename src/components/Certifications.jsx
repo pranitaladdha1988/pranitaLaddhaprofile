@@ -1,11 +1,16 @@
+import { useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
+
 export default function Certifications() {
+  const { t } = useContext(LanguageContext);
+  
   return (
     <section>
-      <h2>Certifications</h2>
+      <h2>{t("certifications.title")}</h2>
       <ul className="certs">
-        <li>AWS Certified – Cloud Fundamentals</li>
-        <li>Microsoft Azure – Azure Fundamentals</li>
-        <li>AI Certification – Applied AI for Product Development</li>
+        {t("certifications.list").map((cert, idx) => (
+          <li key={idx}>{cert}</li>
+        ))}
       </ul>
     </section>
   );
