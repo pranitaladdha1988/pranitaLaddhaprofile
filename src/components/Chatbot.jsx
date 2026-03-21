@@ -3,6 +3,7 @@ import { ChatbotContext } from "../context/ChatbotContext";
 import { LanguageContext } from "../context/LanguageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { chatbotApi } from "../services/chatbotApi";
 import "../styles/Chatbot.css";
 
 export default function Chatbot({ isFloating = false }) {
@@ -30,13 +31,12 @@ export default function Chatbot({ isFloating = false }) {
     setLoading(true);
 
     try {
-      // Replace this with your AI API call
-      // Example: const response = await fetch('/api/chat', { method: 'POST', body: JSON.stringify({ message: input }) });
+      // Call the backend API
+      const response = await chatbotApi.sendMessage(input, messages);
       
-      // For now, using a placeholder response
       const assistantMessage = {
         role: "assistant",
-        content: t("chatbot.error")
+        content: response.response || t("chatbot.error")
       };
       
       setMessages((prev) => [...prev, assistantMessage]);

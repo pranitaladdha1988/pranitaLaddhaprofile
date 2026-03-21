@@ -1,38 +1,47 @@
-import "./App.css";
-import Header from "./components/Header";
-import Summary from "./components/Summary";
-import Skills from "./components/Skills";
-import Experience from "./components/Experience";
-import Products from "./components/Products";
-import Education from "./components/Education";
-import Certifications from "./components/Certifications";
-import Navbar from "./components/Navbar";
-import Chatbot from "./components/Chatbot";
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
-import AI from "./components/AI";
+import Sidebar from "./components/Sidebar";
+import MainLayout from "./components/MainLayout";
+
+// Page Components
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Works from "./pages/Works";
+import AI from "./pages/AI";
+
+// Core Components
+import ThemeToggle from "./components/ThemeToggle";
+import Chatbot from "./components/Chatbot";
+import CustomCursor from "./components/CustomCursor";
 
 export default function App() {
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
   return (
-    <main className="container">
-      {/* Navbar */}
-      <Navbar />
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Header />
-            <Summary />
-            <Education />
-            <Certifications />
-            <Skills />
-            <Experience />
-            <Products />
-          </>
-        } />
-        <Route path="/ai" element={<AI />} />
-      </Routes>
+    <>
+      <CustomCursor />
+      <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+      <Sidebar theme={theme} toggleTheme={toggleTheme} />
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/works" element={<Works />} />
+          <Route path="/ai" element={<AI />} />
+        </Routes>
+      </MainLayout>
       
       {/* Floating Chatbot Assistant */}
       <Chatbot isFloating={true} />
-    </main>
+    </>
   );
 }

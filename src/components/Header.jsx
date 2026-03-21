@@ -1,49 +1,50 @@
-import { useContext } from "react";
-import { useTheme } from "../theme/ThemeContext";
+import React, { useContext } from "react";
+import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faSun, faEnvelope, faPhone, faLink } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
-  const { theme, toggleTheme } = useTheme();
   const { t } = useContext(LanguageContext);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
   return (
-    <header className="header">
-      {/* Centered block */}
-      <div className="header-center">
-        <h1>{t("header.title")}</h1>
-        <p className="title">
-          {t("header.subtitle")}
-        </p>
+    <motion.header 
+      className="hero"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <div className="hero-content">
+        <motion.h1 variants={itemVariants} className="hero-title">
+          {t("header.title").split(" ").map((word, i) => (
+            <span key={i} className="word-block">{word}<br /></span>
+          ))}
+        </motion.h1>
+        
+        <motion.div variants={itemVariants} className="hero-subtitle-container">
+          <p className="hero-subtitle">
+            {t("header.subtitle")}
+          </p>
+        </motion.div>
       </div>
-
-      {/* Top right toggle */}
-      <div className="header-top">
-        <button className="theme-toggle fixed-toggle" onClick={toggleTheme}>
-          <FontAwesomeIcon icon={theme === "light" ? faMoon : faSun} style={{ fontSize: "16px" }} />
-        </button>
-
-      </div>
-
-      {/* Left aligned contact */}
-      <div className="contact">
-        <a href="mailto:laddha.pranita1988@gmail.com">
-          <FontAwesomeIcon icon={faEnvelope} className="icon" style={{ fontSize: "16px" }} /> laddha.pranita1988@gmail.com
-        </a>
-
-        <a href="tel:+919623243042">
-          <FontAwesomeIcon icon={faPhone} className="icon" style={{ fontSize: "16px" }} /> +91 9623243042
-        </a>
-
-        <a
-          href="https://linkedin.com/in/pranita-laddha-2a035b94"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FontAwesomeIcon icon={faLink} className="icon" style={{ fontSize: "16px" }} /> linkedin.com/in/pranita-laddha-2a035b94
-        </a>
-      </div>
-    </header>
+    </motion.header>
   );
 }

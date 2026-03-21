@@ -1,0 +1,157 @@
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List, Optional
+import logging
+from config import settings
+from rag import RAGApplication
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Initialize FastAPI app
+app = FastAPI(
+    title="Chatbot API",
+    description="API for AI chatbot with RAG and OpenAI integration",
+    version="1.0.0"
+)
+
+# Add CORS middleware - Allow all origins for development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize RAG application
+try:
+    rag_app = RAGApplication()
+    logger.info("RAG application initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize RAG application: {str(e)}")
+    logger.error("Make sure OPENAI_API_KEY is set in .env file")
+    rag_app = None
+
+# Request/Response Models
+class Message(BaseModel):
+    role: str  # "user" or "assistant"
+    content: str
+
+class ChatRequest(BaseModel):
+    message: str
+    conversation_history: Optional[List[Message]] = None
+    context: Optional[str] = None
+
+class ChatResponse(BaseModel):
+    response: str
+    status: str
+
+# Routes
+@app.get("/")
+async def root():
+    """Health check endpoint"""
+    return {
+        "status": "ok",
+        "message": "Chatbot API is running",
+        "version": "1.0.0"
+    }
+
+@app.get("/health")
+async def health():
+    """Detailed health check"""
+    return {
+        "status": "healthy",
+        "model": settings.openai_model,
+        "backend_host": settings.backend_host,
+        "backend_port": settings.backend_port
+    }
+
+@app.options("/chat")
+async def options_chat():
+    """Handle CORS preflight requests"""
+    return {"status": "ok"}
+
+@app.post("/chat", response_model=ChatResponse)
+async def chat(request: ChatRequest):
+    """
+    Main chat endpoint for chatbot
+    
+    Request:
+        - message: User's message
+        - conversation_history: Optional conversation history
+        - context: Optional context for RAG
+    
+    Response:
+        - response: AI response
+        - status: Request status
+    """
+    try:
+        if not rag_app:
+            raise HTTPException(status_code=503, detail="RAG application not initialized. Check OPENAI_API_KEY.")
+        
+        if not request.message or request.message.strip() == "":
+            raise HTTPException(status_code=400, detail="Message cannot be empty")
+        
+        logger.info(f"Received chat request: {request.message[:50]}...")
+        
+        # Retrieve context if not provided
+        context = request.context or await rag_app.retrieve_context(request.message)
+        
+        # Process query with RAG
+        response = await rag_app.process_query(request.message, context)
+        
+        logger.info(f"Chat request processed successfully")
+        
+        return ChatResponse(
+            response=response,
+            status="success"
+        )
+    
+    except HTTPException as he:
+        logger.error(f"HTTP Error: {he.detail}")
+        raise he
+    except Exception as e:
+        logger.error(f"Error in chat endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@app.post("/chat/stream")
+async def chat_stream(request: ChatRequest):
+    """
+    Streaming chat endpoint for real-time responses
+    """
+    try:
+        if not request.message or request.message.strip() == "":
+            raise HTTPException(status_code=400, detail="Message cannot be empty")
+        
+        context = request.context or await rag_app.retrieve_context(request.message)
+        response = await rag_app.process_query(request.message, context)
+        
+        return JSONResponse(
+            content={"response": response, "status": "success"},
+            media_type="application/json"
+        )
+    except Exception as e:
+        logger.error(f"Error in streaming endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Error handling
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    logger.error(f"Unhandled exception: {str(exc)}")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error"}
+    )
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        app,
+        host=settings.backend_host,
+        port=settings.backend_port,
+        log_level="info"
+    )

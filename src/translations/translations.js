@@ -6,7 +6,7 @@ export const translations = {
     },
     header: {
       title: "Pranita Laddha",
-      subtitle: "Principal Frontend Architect | Enterprise & AI-Enabled Platforms",
+      subtitle: "Senior Software Engineer | GenAI & AI Systems Engineer | LLMs, RAG, Agents, LangChain | Python, TensorFlow, PyTorch | Angular & Cloud (AWS/Azure/GCP) | 11+ Years",
       email: "laddha.pranita1988@gmail.com",
       phone: "+91 9623243042",
       linkedin: "linkedin.com/in/pranita-laddha-2a035b94",
@@ -17,46 +17,44 @@ export const translations = {
     },
     summary: {
       title: "Professional Summary",
-      description: "Principal Frontend Architect with 11+ years of experience designing, governing, and scaling enterprise-grade, cloud-native web platforms. Deep expertise in Angular, TypeScript, frontend architecture, platform governance, and AI-enabled, analytics-driven UX."
+      description: "I'm a Senior Software Engineer with 11+ years of experience building scalable, high-performance products, currently focused on designing AI-powered systems using modern GenAI technologies. I develop products involving LLMs, Retrieval-Augmented Generation (RAG), and agent-based architectures, with a focus on building practical, production-ready solutions."
     },
     skills: {
       title: "Core Capabilities",
       categories: {
-        frontendArchitecture: {
-          title: "Frontend Architecture & Platform Ownership",
+        aiGenAI: {
+          title: "GenAI & AI Systems",
           items: [
-            "Angular (1–20), TypeScript, JavaScript (ES6+)",
-            "Modular & scalable frontend system design",
-            "Reusable UI libraries & shared frameworks",
-            "Performance, maintainability & scalability governance",
-            "Angular modernization & upgrade leadership"
+            "LLMs, RAG, AI Agents",
+            "LangChain, LangGraph",
+            "Python, TensorFlow, PyTorch",
+            "Vector Databases & Semantic Search"
           ]
         },
-        aiAnalytics: {
-          title: "AI-Enabled & Analytics-Driven UX",
+        frontendArchitecture: {
+          title: "Frontend & Architecture",
           items: [
-            "Frontend design for AI & analytics powered features",
-            "Intelligent discovery & insights-driven workflows",
-            "Explainability-ready UI & user trust considerations",
-            "User behavior analytics (FullStory)"
+            "Angular (1–20), TypeScript, JavaScript (ES6+)",
+            "Modular & Scalable System Design",
+            "Reusable UI Libraries & Frameworks",
+            "Performance & UX Optimization"
           ]
         },
         cloudDevops: {
-          title: "Cloud, DevOps & Platform Integration",
+          title: "Cloud & Infrastructure",
           items: [
-            "AWS, Azure, Docker, Kubernetes (hands-on exposure)",
-            "CI/CD pipelines (Jenkins)",
-            "Cloud-aligned frontend architecture",
-            "REST API integration & collaboration"
+            "AWS, Azure, GCP",
+            "Kubernetes, Docker",
+            "CI/CD Pipelines (Jenkins)",
+            "Scalable System Design"
           ]
         },
-        leadership: {
-          title: "Leadership, Governance & Delivery",
+        languages: {
+          title: "Languages",
           items: [
-            "Architecture reviews & final PR authority",
-            "Agile / Scrum process ownership",
-            "Estimation, release planning & roadmap alignment",
-            "Cross-functional leadership (UI, Backend, DevOps)"
+            "English (Professional)",
+            "Hindi (Native)",
+            "Marathi (Native)"
           ]
         }
       }
@@ -65,19 +63,35 @@ export const translations = {
       title: "Professional Experience",
       positions: [
         {
-          company: "Veritas Technologies",
-          role: "Principal Frontend Architect | Jul 2022 – Present",
+          company: "InfoScale",
+          role: "Senior Software Engineer - AI & GenAI Systems | Dec 2025 – Present",
           responsibilities: [
-            "Own frontend architecture and governance for Infoscale / ALTA",
-            "Lead a 14-member cross-functional team",
-            "Designed reusable UI component libraries",
-            "Led Angular modernization and upgrades",
-            "Architected AI-enabled analytics and discovery workflows"
+            "Leading AI-driven initiative for cloud infrastructure",
+            "Implementing LLM-based solutions for complex system orchestration",
+            "Architecting scalable GenAI pipelines"
+          ]
+        },
+        {
+          company: "Arctera.io",
+          role: "Senior Software Engineer - AI & GenAI Systems | Nov 2024 – Dec 2025",
+          responsibilities: [
+            "Designed and developed AI agents for research workflows",
+            "Integrated RAG pipelines for trend analysis and summarization",
+            "Optimized token usage and cost-efficient model strategies"
+          ]
+        },
+        {
+          company: "Veritas Technologies LLC",
+          role: "Senior Product Engineer - AI & GenAI Systems | Jul 2022 – Nov 2024",
+          responsibilities: [
+            "Modernized enterprise platforms with AI features",
+            "Owned frontend governance and Angular modernization",
+            "Architected discovery workflows with intelligent insights"
           ]
         },
         {
           company: "Tata Consultancy Services",
-          role: "Technical Lead – Frontend | Jun 2021 – Jul 2022",
+          role: "Technical Lead | Jun 2021 – Jul 2022",
           responsibilities: [
             "Owned Angular UI architecture for banking platforms",
             "Led Agile ceremonies and release planning"
@@ -90,56 +104,72 @@ export const translations = {
             "Delivered secure Angular enterprise platforms",
             "JWT, AWS Cognito, lazy loading, interceptors"
           ]
+        },
+        {
+          company: "NeoSOFT Technologies",
+          role: "Sr. Front End Developer | Jan 2017 – Dec 2018",
+          responsibilities: [
+            "Responsive web development using modern JS frameworks",
+            "UI/UX optimization and performance tuning"
+          ]
         }
       ]
     },
     education: {
       title: "Education",
-      degree: "Bachelor of Engineering (Computer Engineering)",
-      university: "Pune University"
+      degree: "Engineer's Degree, Computer Engineering (2006 - 2009)",
+      university: "PREC, Loni, University of Pune"
     },
     certifications: {
       title: "Certifications",
       list: [
-        "AWS Certified – Cloud Fundamentals",
-        "Microsoft Azure – Azure Fundamentals",
-        "AI Certification – Applied AI for Product Development"
+        "Microsoft Certified: Azure AI Fundamentals",
+        "Microsoft Certified: Azure Developer Associate",
+        "AWS Certified Cloud Practitioner",
+        "Veritas Cloud FinOps",
+        "SOLID & GRASP"
       ]
     },
     products: {
-      title: "Key Product Experience",
+      title: "Selected Work",
       projects: [
         {
-          name: "Infoscale / ALTA – Cloud Backup-as-a-Service",
-          description: "Enterprise SaaS platform for multi-cloud data protection (AWS, Azure, GCP).",
-          highlights: [
-            "Frontend architecture for analytics & malware scanning",
-            "Non-disruptive recovery UX",
-            "Platform-level UI ownership"
-          ]
+          name: "GenAI Analysis Platform",
+          description: "Built a GenAI-powered platform that analyzes and summarizes trends from multiple sources using RAG pipelines.",
+          highlights: ["LLMs", "RAG Pipelines", "Data Summarization"]
+        },
+        {
+          name: "AI Agents for Research",
+          description: "Developed AI agents for development and research workflows using LangChain and LangGraph.",
+          highlights: ["LangChain", "LangGraph", "AI Agents"]
+        },
+        {
+          name: "Content Generation Pipelines",
+          description: "Designed content generation pipelines with optimized token usage and cost-efficient model strategies.",
+          highlights: ["Token Optimization", "Cost Efficiency", "LLM Integration"]
         }
       ]
     },
     ai: {
-      title: "AI Projects",
-      intro: "AI Chat Assistant",
+      title: "GenAI Initiatives",
+      intro: "Exploring the frontier of Agentic Workflows and RAG.",
       projects: [
         {
-          name: "AI-Powered Chatbot",
-          description: "Developed an AI-powered chatbot using natural language processing to assist users with common inquiries."
+          name: "RAG Trend Summarizer",
+          description: "A platform to distill massive datasets into actionable insights."
         },
         {
-          name: "Image Recognition System",
-          description: "Created an image recognition system using deep learning techniques to classify and tag images accurately."
+          name: "LangGraph Orchestrator",
+          description: "Agentic workflows for complex multi-step reasoning tasks."
         }
       ]
     },
     chatbot: {
       title: "AI Assistant",
-      placeholder: "Type your message...",
+      placeholder: "Ask about my GenAI expertise...",
       send: "Send",
       sending: "Sending...",
-      hello: "Hello! I'm an AI chatbot. How can I help you today?",
+      hello: "Hello! I'm Pranita's AI assistant. I can tell you about her work in GenAI, RAG, and LLMs.",
       thinking: "Thinking...",
       error: "Sorry, I encountered an error. Please try again."
     }
