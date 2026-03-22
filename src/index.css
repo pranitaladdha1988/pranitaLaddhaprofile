@@ -298,10 +298,11 @@ button {
   }
 
   .sidebar-content {
-    padding: 0 25px;
+    padding: 0 15px; /* Reduced from 25px */
     align-items: center;
     justify-content: space-between;
-    flex-direction: row; /* Ensure it's horizontal */
+    flex-direction: row;
+    flex-wrap: nowrap; /* Prevent wrapping */
   }
 
   .sidebar-nav {
@@ -311,7 +312,7 @@ button {
 
   .sidebar-nav ul {
     display: flex;
-    gap: 20px;
+    gap: 12px; /* Reduced from 20px */
   }
 
   .sidebar-nav a {
@@ -332,8 +333,8 @@ button {
   .social-links {
     display: flex;
     flex-direction: row;
-    gap: 15px;
-    margin-left: 20px;
+    gap: 12px; /* Reduced from 15px */
+    margin-left: 15px;
   }
 
   .social-links a {
@@ -768,12 +769,14 @@ button {
 
 @media (max-width: 1024px) {
   .resume-download-wrapper {
+    margin-top: 0;
     margin-bottom: 0;
     width: auto;
   }
   
   .download-resume-btn {
-    padding: 8px 15px;
-    font-size: 9px;
+    padding: 6px 12px; /* More compact */
+    font-size: 8px; /* Slightly smaller */
+    gap: 8px;
   }
 }
