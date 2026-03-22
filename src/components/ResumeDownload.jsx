@@ -26,7 +26,7 @@ const ResumeDownload = () => {
       const { token } = await response.json();
       
       // 2. Trigger Download
-      window.location.href = `${API_BASE}/api/resume/download/${token}`;
+      window.location.href = `/api/resume?token=${token}`;
       
       setFormState('success');
       setTimeout(() => {
