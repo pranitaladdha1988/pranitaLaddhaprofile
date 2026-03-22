@@ -57,7 +57,13 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: "Verification email sent" })
+        body: JSON.stringify({ 
+          message: "Verification email sent",
+          debug: {
+            isPlaceholder: RESEND_API_KEY === 're_placeholder',
+            keyLead: RESEND_API_KEY.substring(0, 7)
+          }
+        })
       };
     } catch (error) {
       console.error("Resend Error:", error);
