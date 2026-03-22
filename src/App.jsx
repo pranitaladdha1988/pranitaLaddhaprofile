@@ -30,7 +30,7 @@ export default function App() {
     <>
       <CustomCursor />
       <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-      <Sidebar theme={theme} toggleTheme={toggleTheme} />
+      <Sidebar />
       <MainLayout>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-
   const springConfig = { damping: 25, stiffness: 200 };
-  const cursorX = useSpring(0, springConfig);
-  const cursorY = useSpring(0, springConfig);
+  const cursorX = useSpring(-50, springConfig); // Start off-screen
+  const cursorY = useSpring(-50, springConfig);
 
   useEffect(() => {
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) return;
+
     const moveMouse = (e) => {
       cursorX.set(e.clientX - 10);
       cursorY.set(e.clientY - 10);
