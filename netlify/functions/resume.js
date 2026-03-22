@@ -3,15 +3,17 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const { Resend } = require('resend');
 
-// Configuration
-const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_placeholder';
-const JWT_SECRET = process.env.JWT_SECRET || 'resume_secret_123';
-const SITE_URL = process.env.URL || 'http://localhost:8888';
-
-const resend = new Resend(RESEND_API_KEY);
-
 exports.handler = async (event, context) => {
-  const { httpMethod, body, queryStringParameters } = event;
+  const { httpMethod, body, queryStringParameters, headers } = event;
+
+  // Configuration - Dynamic Site URL
+  const host = headers['x-forwarded-host'] || headers.host || 'pranitaladdhaprofile.netlify.app';
+  const protocol = headers['x-forwarded-proto'] || 'https';
+  const SITE_URL = process.env.URL || `${protocol}://${host}`;
+  const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_placeholder';
+  const JWT_SECRET = process.env.JWT_SECRET || 'resume_secret_123';
+
+  const resend = new Resend(RESEND_API_KEY);
 
   // 1. INITIAL LEAD SUBMISSION (POST)
   // Generates verification email
