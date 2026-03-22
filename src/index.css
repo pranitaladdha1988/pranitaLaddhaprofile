@@ -272,6 +272,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 60px;
   }
 
   .sidebar-footer {
@@ -598,3 +599,181 @@ button {
 }
 
 
+
+/* Resume Download & Modal */
+.resume-download-wrapper {
+  margin-top: auto;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.download-resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  padding: 5px 0;
+  width: fit-content;
+  justify-content: flex-start;
+  transition: var(--transition-smooth);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.download-resume-btn:hover {
+  color: var(--fg-color);
+  transform: translateX(5px);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.download-modal {
+  background: var(--bg-color);
+  width: 100%;
+  max-width: 480px;
+  padding: 80px 50px;
+  position: relative;
+  border: 1px solid var(--accent-color);
+}
+
+.close-modal {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.close-modal:hover {
+  color: var(--fg-color);
+  transform: rotate(90deg);
+}
+
+.modal-header h3 {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.modal-header p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 50px;
+  line-height: 1.6;
+}
+
+.download-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+
+.form-group input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--accent-color);
+  padding: 12px 0;
+  color: var(--fg-color);
+  font-family: inherit;
+  font-size: 16px;
+  width: 100%;
+  transition: var(--transition-smooth);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-bottom-color: var(--fg-color);
+}
+
+.submit-download-btn {
+  background: var(--fg-color);
+  color: var(--bg-color);
+  padding: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-top: 20px;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.submit-download-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  letter-spacing: 4px;
+}
+
+.submit-download-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.success-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 25px;
+}
+
+.success-state h3 {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.success-state p {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.error-msg {
+  color: #ff4b4b;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+  .resume-download-wrapper {
+    margin-bottom: 0;
+    width: auto;
+  }
+  
+  .download-resume-btn {
+    padding: 8px 15px;
+    font-size: 9px;
+  }
+}

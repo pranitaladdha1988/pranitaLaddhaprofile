@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import ResumeDownload from './ResumeDownload';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -61,6 +62,8 @@ const Sidebar = () => {
               );
             })}
           </div>
+
+        <ResumeDownload />
 
         <div className="sidebar-footer">
           © {new Date().getFullYear()} PRANITA LADDHA
