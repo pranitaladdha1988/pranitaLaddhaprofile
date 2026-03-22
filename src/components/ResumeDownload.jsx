@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, X, CheckCircle } from 'lucide-react';
+import { Download, X, CheckCircle, Mail } from 'lucide-react';
 
 const ResumeDownload = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +15,7 @@ const ResumeDownload = () => {
     const API_BASE = ''; 
     
     try {
-      // 1. Capture Lead
+      // 1. Capture Lead (Triggers Verification Email)
       const response = await fetch(`${API_BASE}/api/resume/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -23,17 +23,13 @@ const ResumeDownload = () => {
       });
       
       if (!response.ok) throw new Error('Failed to capture lead');
-      const { token } = await response.json();
-      
-      // 2. Trigger Download
-      window.location.href = `/api/resume?token=${token}`;
       
       setFormState('success');
       setTimeout(() => {
         setIsOpen(false);
         setFormState('idle');
         setFormData({ name: '', email: '', company: '' });
-      }, 2000);
+      }, 6000); // Give user enough time to read "CHECK YOUR EMAIL"
       
     } catch (err) {
       console.error(err);
@@ -60,13 +56,16 @@ const ResumeDownload = () => {
                 <X size={20} />
               </button>
 
-              {formState === 'success' ? (
-                <div className="success-state">
-                  <CheckCircle size={48} color="#4ade80" />
-                  <h3>THANK YOU</h3>
-                  <p>Your download should start automatically.</p>
-                </div>
-              ) : (
+               {formState === 'success' ? (
+                 <div className="success-state">
+                   <div className="mail-icon-pulse">
+                     <Mail size={48} color="#4ade80" />
+                   </div>
+                   <h3>CHECK YOUR EMAIL</h3>
+                   <p>A verification link has been sent. Please confirm your email to start the download.</p>
+                   <p className="hint">Don't forget to check your spam folder.</p>
+                 </div>
+               ) : (
                 <>
                   <div className="modal-header">
                     <h3>GET RESUME</h3>

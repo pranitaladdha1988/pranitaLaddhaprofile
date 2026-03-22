@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
@@ -166,60 +166,97 @@ async def chat_stream(request: ChatRequest):
         logger.error(f"Error in streaming endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+import resend
+import jwt
+from datetime import datetime, timedelta
+
+# Configuration
+RESEND_API_KEY = settings.resend_api_key
+JWT_SECRET = settings.jwt_secret
+SITE_URL = "http://localhost:5173" # For local dev
+resend.api_key = RESEND_API_KEY
+
 @app.post("/api/resume/lead")
 async def capture_lead(lead: Lead, request: Request):
-    """Capture lead info and return a download token"""
+    """Capture lead info and send verification email"""
     try:
-        token = str(uuid.uuid4())
-        timestamp = datetime.now().isoformat()
-        
-        lead_record = {
-            "name": lead.name,
+        # Create a JWT token - valid for 1 hour
+        payload = {
             "email": lead.email,
-            "company": lead.company,
-            "timestamp": timestamp,
-            "ip": request.client.host,
-            "user_agent": request.headers.get("user-agent"),
-            "token": token
+            "name": lead.name,
+            "company": lead.company or "N/A",
+            "exp": datetime.utcnow() + timedelta(hours=1),
+            "action": "verify_resume"
         }
+        token = jwt.encode(payload, JWT_SECRET, algorithm="HS256")
         
+        verify_link = f"http://localhost:8001/api/resume/verify?token={token}"
+        
+        # Send Email via Resend
+        if RESEND_API_KEY != "re_placeholder":
+            logger.info(f"Sending REAL verification email to {lead.email}...")
+            resend.Emails.send({
+                "from": "Resume <onboarding@resend.dev>",
+                "to": lead.email,
+                "subject": "Verify your email to download Pranita's Resume",
+                "html": f"""
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
+                  <h2 style="font-weight: 300; letter-spacing: -1px;">Pranita Laddha resume</h2>
+                  <p style="margin: 30px 0; line-height: 1.6;">Hello {lead.name},</p>
+                  <p style="line-height: 1.6;">Click the button below to verify your email and download my resume.</p>
+                  <a href="{verify_link}" style="display: inline-block; background: #000; color: #fff; padding: 15px 30px; text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 2px; margin: 20px 0;">VERIFY & DOWNLOAD</a>
+                </div>
+                """
+            })
+        else:
+            logger.info(f"MOCK EMAIL TO {lead.email} - LINK: {verify_link}")
+
+        return {"status": "success", "message": "Verification email sent"}
+    except Exception as e:
+        logger.error(f"Error initiating verification: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to initiate verification")
+
+
+@app.get("/api/resume/verify")
+async def verify_resume(token: str):
+    """Verify JWT and redirect to file download"""
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        # Save to leads.json upon verification
+        lead_record = {
+            "name": payload.get("name", "Unknown"),
+            "email": payload.get("email", "Unknown"),
+            "company": payload.get("company", "N/A"),
+            "timestamp": datetime.now().isoformat(),
+            "status": "verified"
+        }
         save_lead(lead_record)
         
-        # Store token for download validation (valid for 10 minutes)
-        download_tokens[token] = {
-            "email": lead.email,
-            "created_at": timestamp
-        }
-        
-        return {"token": token, "status": "success"}
-    except Exception as e:
-        logger.error(f"Error capturing lead: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to initiate download")
+        # Redirect to the actual download route
+        download_url = f"http://localhost:8001/api/resume/download/{token}"
+        return RedirectResponse(url=download_url)
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=403, detail="Verification link expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=403, detail="Invalid verification link")
 
 @app.get("/api/resume/download/{token}")
 async def download_resume(token: str):
-    """Serve the resume PDF if token is valid"""
-    if token not in download_tokens:
+    """Serve the resume PDF if JWT is valid"""
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        
+        resume_path = os.path.join(os.path.dirname(__file__), "pdf", "resume.pdf")
+        if not os.path.exists(resume_path):
+            raise HTTPException(status_code=404, detail="Resume file not found")
+        
+        return FileResponse(
+            path=resume_path,
+            filename="Pranita_Laddha_Resume.pdf",
+            media_type="application/pdf"
+        )
+    except Exception as e:
         raise HTTPException(status_code=403, detail="Invalid or expired download link")
-    
-    # Path to resume
-    resume_path = os.path.join(os.path.dirname(__file__), "pdf", "resume.pdf")
-    
-    if not os.path.exists(resume_path):
-        logger.error(f"Resume file not found at {resume_path}")
-        raise HTTPException(status_code=404, detail="Resume file not found")
-    
-    # Optional: Log the download event
-    logger.info(f"Resume downloaded by {download_tokens[token]['email']}")
-    
-    # Clean up token after use (single-use token for security)
-    # del download_tokens[token] 
-    
-    return FileResponse(
-        path=resume_path,
-        filename="Pranita_Laddha_Resume.pdf",
-        media_type="application/pdf"
-    )
 
 # Error handling
 @app.exception_handler(Exception)
