@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "./SectionLabel";
 
 const ExperienceItem = ({ position, index, total }) => {
   const formattedIndex = String(index + 1).padStart(2, '0');
@@ -36,7 +37,7 @@ export default function Experience() {
 
   return (
     <section className="works-section">
-      <h2 className="section-label">[ 02 / EXPERIENCE ]</h2>
+      <SectionLabel index={2} total={2} label="EXPERIENCE" />
       <div className="experience-list">
         {positions.map((pos, idx) => (
           <ExperienceItem key={idx} position={pos} index={idx} total={positions.length} />

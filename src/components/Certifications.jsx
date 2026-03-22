@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "./SectionLabel";
 
 export default function Certifications() {
   const { t } = useContext(LanguageContext);
 
   return (
     <section className="works-section">
-      <h2 className="section-label">[ 05 / CERTIFICATIONS ]</h2>
+      <SectionLabel index={4} total={4} label="CERTIFICATIONS" />
       <div className="certs-list">
         {t("certifications.list").map((cert, idx) => (
           <motion.div

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "./SectionLabel";
 
 const ProductItem = ({ project, index, total }) => {
   const formattedIndex = String(index + 1).padStart(2, '0');
@@ -8,10 +9,10 @@ const ProductItem = ({ project, index, total }) => {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ opacity: 0, x: 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
       className="product-item"
     >
       <div className="item-index">[ {formattedIndex} / {formattedTotal} ]</div>
@@ -34,7 +35,7 @@ export default function Products() {
 
   return (
     <section className="works-section">
-      <h2 className="section-label">[ 03 / PRODUCTS ]</h2>
+      <SectionLabel index={1} total={2} label="PRODUCTS" />
       <div className="products-list">
         {projects.map((project, idx) => (
           <ProductItem key={idx} project={project} index={idx} total={projects.length} />

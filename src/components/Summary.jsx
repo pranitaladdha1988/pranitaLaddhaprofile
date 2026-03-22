@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "./SectionLabel";
 
 export default function Summary() {
   const { t } = useContext(LanguageContext);
@@ -13,7 +14,7 @@ export default function Summary() {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
       className="summary-section"
     >
-      <h2 className="section-label">[ 01 / SUMMARY ]</h2>
+      <SectionLabel index={1} total={4} label="SUMMARY" />
       <div className="summary-content">
         <p className="summary-text">
           {t("summary.description")}

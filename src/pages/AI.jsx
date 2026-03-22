@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
-import { motion } from "framer-motion";
-import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "../components/SectionLabel";
 
 export default function AI() {
   const { t } = useContext(LanguageContext);
@@ -8,7 +6,7 @@ export default function AI() {
 
   return (
     <section className="works-section">
-      <h2 className="section-label">[ 07 / AI PROJECTS ]</h2>
+      <SectionLabel index={1} total={1} label="AI PROJECTS" />
       <div className="ai-list">
         {aiProjects.map((project, idx) => (
           <motion.div 

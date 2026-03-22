@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "./SectionLabel";
 
 export default function Education() {
   const { t } = useContext(LanguageContext);
 
   return (
     <section className="works-section">
-      <h2 className="section-label">[ 01 / EDUCATION ]</h2>
+      <SectionLabel index={3} total={4} label="EDUCATION" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

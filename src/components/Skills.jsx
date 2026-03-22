@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import SectionLabel from "./SectionLabel";
 
 export default function Skills() {
   const { t, language } = useContext(LanguageContext);
@@ -15,7 +16,7 @@ export default function Skills() {
 
   return (
     <section className="works-section">
-      <h2 className="section-label">[ 04 / CAPABILITIES ]</h2>
+      <SectionLabel index={2} total={4} label="CAPABILITIES" />
       <div className="skills-grid">
         {skillCategories.map((group, idx) => (
           <motion.div 
@@ -37,51 +38,8 @@ export default function Skills() {
       </div>
 
       <style>{`
-        .works-section {
-          padding: 100px 0;
-          border-bottom: 1px solid var(--accent-color);
-        }
-
-        .section-label {
-          font-size: 10px;
-          letter-spacing: 3px;
-          font-weight: 700;
-          color: var(--text-muted);
-          margin-bottom: 60px;
-        }
-
-        .skills-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 60px;
-        }
-
-        .category-title {
-          font-size: 24px;
-          font-weight: 300;
-          letter-spacing: -0.5px;
-          margin-bottom: 25px;
-          padding-bottom: 15px;
-          border-bottom: 1px solid var(--accent-color);
-        }
-
-        .skill-items {
-          list-style: none;
-        }
-
-        .skill-items li {
-          font-size: 15px;
-          font-weight: 300;
-          line-height: 1.8;
-          color: var(--text-muted);
-          margin-bottom: 8px;
-        }
-
-        @media (max-width: 768px) {
-          .skills-grid {
-            grid-template-columns: 1fr;
-            gap: 40px;
-          }
+        .skill-category {
+          margin-bottom: 20px;
         }
       `}</style>
     </section>

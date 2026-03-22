@@ -39,7 +39,11 @@ export default function Header() {
           ))}
         </motion.h1>
         
-        <motion.div variants={itemVariants} className="hero-subtitle-container">
+        <motion.div 
+          variants={itemVariants} 
+          className="hero-subtitle-container"
+          style={{ borderTop: '1px solid var(--accent-color)', paddingTop: '40px', borderLeft: 'none' }}
+        >
           <p className="hero-subtitle">
             {t("header.subtitle")}
           </p>
