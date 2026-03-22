@@ -304,6 +304,24 @@ button {
     display: none;
   }
 
+  .social-links {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-left: 20px;
+  }
+
+  .social-links a {
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+  }
+
+  .social-links a:hover {
+    color: var(--fg-color);
+  }
+
   .sidebar-logo a {
     font-size: 18px;
   }

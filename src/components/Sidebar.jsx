@@ -13,14 +13,14 @@ const Sidebar = () => {
   ];
 
   const socialItems = [
-    { icon: <Linkedin size={18} />, url: 'https://linkedin.com' },
-    { icon: <Github size={18} />, url: 'https://github.com' },
-    { icon: <Instagram size={18} />, url: 'https://instagram.com' },
-    { icon: <Mail size={18} />, url: 'mailto:contact@example.com' },
+    { icon: <Linkedin size={18} />, url: 'https://www.linkedin.com/in/pranita-laddha-2a035b94/' },
+    { icon: <Github size={18} />, url: 'https://github.com/pranitaladdha1988?tab=repositories' },
+    // { icon: <Instagram size={18} />, url: 'https://instagram.com' },
+    { icon: <Mail size={18} />, url: 'mailto:laddha.pranita1988@gmail.com' },
   ];
 
   return (
-    <motion.aside 
+    <motion.aside
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -35,8 +35,8 @@ const Sidebar = () => {
           <ul>
             {navItems.map((item) => (
               <li key={item.name}>
-                <Link 
-                  to={item.path} 
+                <Link
+                  to={item.path}
                   className={location.pathname === item.path ? 'active' : ''}
                 >
                   {item.name}
@@ -46,15 +46,21 @@ const Sidebar = () => {
           </ul>
         </nav>
 
-        <div className="sidebar-social">
           <div className="social-links">
-            {socialItems.map((social, index) => (
-              <a key={index} href={social.url} target="_blank" rel="noopener noreferrer">
-                {social.icon}
-              </a>
-            ))}
+            {socialItems.map((social, index) => {
+              const isEmail = social.url.startsWith('mailto:');
+              return (
+                <a 
+                  key={index} 
+                  href={social.url} 
+                  target={isEmail ? "_self" : "_blank"} 
+                  rel="noopener noreferrer"
+                >
+                  {social.icon}
+                </a>
+              );
+            })}
           </div>
-        </div>
 
         <div className="sidebar-footer">
           © {new Date().getFullYear()} PRANITA LADDHA
