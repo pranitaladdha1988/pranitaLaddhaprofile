@@ -60,8 +60,12 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ message: "Verification email sent" })
       };
     } catch (error) {
-      console.error(error);
-      return { statusCode: 500, body: JSON.stringify({ error: "Failed to process request" }) };
+      console.error("Resend Error:", error);
+      return { 
+        statusCode: 500, 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: error.message || "Failed to process request" }) 
+      };
     }
   }
 

@@ -61,7 +61,7 @@ const ResumeDownload = () => {
                    <div className="mail-icon-pulse">
                      <Mail size={48} color="#4ade80" />
                    </div>
-                   <h3>CHECK YOUR EMAIL</h3>
+                   <h3 className="success-title">Check your email, Verify and download the resume</h3>
                    <p>A verification link has been sent. Please confirm your email to start the download.</p>
                    <p className="hint">Don't forget to check your spam folder.</p>
                  </div>
