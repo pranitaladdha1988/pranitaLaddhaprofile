@@ -12,19 +12,14 @@ const ResumeDownload = () => {
     setFormState('submitting');
     
     try {
-      // Create form data for Netlify
-      const body = new URLSearchParams({
-        "form-name": "resume-leads",
-        ...formData
-      }).toString();
-
-      // Submit directly to Netlify's built-in form handler
-      // This works without an API endpoint because Netlify intercepts the POST
-      await fetch("/", {
+      // Submit to our new Cloudflare API endpoint
+      const response = await fetch("/api/resume", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) throw new Error('API request failed');
       
       setFormState('success');
     } catch (err) {
@@ -60,7 +55,7 @@ const ResumeDownload = () => {
                     <h3 className="success-title">Thank you! You can now download the resume</h3>
                     <div className="final-download-action">
                       <a 
-                        href="/Pranita_Laddha_Resume.pdf" 
+                        href="/resume.pdf" 
                         download 
                         className="submit-download-btn primary"
                         onClick={() => {
