@@ -18,6 +18,9 @@ export default {
       // 1. INITIAL LEAD SUBMISSION (POST)
       if (method === 'POST') {
         try {
+          console.log("POST /api/resume triggered");
+          console.log("RESEND_API_KEY status:", RESEND_API_KEY === 're_placeholder' ? "MISSING" : "FOUND (" + RESEND_API_KEY.substring(0, 5) + "...)");
+          
           const { name, email, company } = await request.json();
           if (!email) return new Response("Email required", { status: 400 });
 
@@ -30,7 +33,8 @@ export default {
           const verifyLink = `${SITE_URL}/api/resume?verify=${verificationToken}`;
 
           if (RESEND_API_KEY !== 're_placeholder') {
-            await resend.emails.send({
+            console.log("Attempting to send email to", email);
+            const resendResponse = await resend.emails.send({
               from: 'Resume <onboarding@resend.dev>',
               to: email,
               subject: 'Verify your email to download Pranita\'s Resume',
@@ -43,12 +47,16 @@ export default {
                 </div>
               `
             });
+            console.log("Resend API response:", JSON.stringify(resendResponse));
+          } else {
+            console.log("SKIP EMAIL: RESEND_API_KEY is missing/placeholder");
           }
 
-          return new Response(JSON.stringify({ message: "Verification email sent" }), {
+          return new Response(JSON.stringify({ message: "Verification email sent", debug: { apiKeyFound: RESEND_API_KEY !== 're_placeholder' } }), {
             headers: { 'Content-Type': 'application/json' }
           });
         } catch (error) {
+          console.error("Resend Error:", error.message);
           return new Response(JSON.stringify({ error: error.message }), { status: 500 });
         }
       }
