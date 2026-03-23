@@ -11,26 +11,22 @@ const ResumeDownload = () => {
     e.preventDefault();
     setFormState('submitting');
     
-    // Determine API URL based on environment (handled by proxy in dev/netlify)
-    const API_BASE = ''; 
-    
     try {
-      // 1. Capture Lead (Triggers Verification Email)
-      const response = await fetch(`${API_BASE}/api/resume/lead`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+      // Create form data for Netlify
+      const body = new URLSearchParams({
+        "form-name": "resume-leads",
+        ...formData
+      }).toString();
+
+      // Submit directly to Netlify's built-in form handler
+      // This works without an API endpoint because Netlify intercepts the POST
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body,
       });
       
-      if (!response.ok) throw new Error('Failed to capture lead');
-      
       setFormState('success');
-      setTimeout(() => {
-        setIsOpen(false);
-        setFormState('idle');
-        setFormData({ name: '', email: '', company: '' });
-      }, 6000); // Give user enough time to read "CHECK YOUR EMAIL"
-      
     } catch (err) {
       console.error(err);
       setFormState('error');
@@ -56,15 +52,29 @@ const ResumeDownload = () => {
                 <X size={20} />
               </button>
 
-               {formState === 'success' ? (
-                 <div className="success-state">
-                   <div className="mail-icon-pulse">
-                     <Mail size={48} color="#4ade80" />
-                   </div>
-                   <h3 className="success-title">Check your email, Verify and download the resume</h3>
-                   <p>A verification link has been sent. Please confirm your email to start the download.</p>
-                   <p className="hint">Don't forget to check your spam folder.</p>
-                 </div>
+                {formState === 'success' ? (
+                  <div className="success-state">
+                    <div className="success-icon">
+                      <CheckCircle size={48} color="#4ade80" />
+                    </div>
+                    <h3 className="success-title">Thank you! You can now download the resume</h3>
+                    <div className="final-download-action">
+                      <a 
+                        href="/Pranita_Laddha_Resume.pdf" 
+                        download 
+                        className="submit-download-btn primary"
+                        onClick={() => {
+                          setTimeout(() => {
+                            setIsOpen(false);
+                            setFormState('idle');
+                            setFormData({ name: '', email: '', company: '' });
+                          }, 1000);
+                        }}
+                      >
+                        <Download size={18} /> DOWNLOAD PDF
+                      </a>
+                    </div>
+                  </div>
                ) : (
                 <>
                   <div className="modal-header">
