@@ -98,6 +98,14 @@ export default {
     }
 
     // Default: Serve static assets
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    
+    // SPA Routing: If the response is a 404 and it's not a file request (no extension),
+    // serve index.html instead to allow React Router to handle the page.
+    if (response.status === 404 && !url.pathname.includes('.')) {
+      return env.ASSETS.fetch(new Request(`${url.origin}/index.html`, request));
+    }
+
+    return response;
   }
 }
