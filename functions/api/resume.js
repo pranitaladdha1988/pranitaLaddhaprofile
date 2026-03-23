@@ -11,6 +11,9 @@ export async function onRequest(context) {
   const JWT_SECRET = env.JWT_SECRET || 'resume_secret_123';
   const SITE_URL = new URL(request.url).origin;
 
+  console.log("Health Check:", url.pathname);
+  console.log("RESEND_API_KEY status:", RESEND_API_KEY === 're_placeholder' ? "MISSING" : "FOUND (" + RESEND_API_KEY.substring(0, 5) + "...)");
+
   const resend = new Resend(RESEND_API_KEY);
 
   // 1. INITIAL LEAD SUBMISSION (POST)
