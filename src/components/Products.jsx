@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { motion } from "framer-motion";
+import React, { useContext, useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
 import SectionLabel from "./SectionLabel";
 
@@ -32,14 +32,79 @@ const ProductItem = ({ project, index, total }) => {
 export default function Products() {
   const { t } = useContext(LanguageContext);
   const projects = t("products.projects");
+  const scrollRef = useRef(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowLeftArrow(scrollLeft > 10);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener('scroll', checkScroll);
+      checkScroll();
+      return () => el.removeEventListener('scroll', checkScroll);
+    }
+  }, []);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { clientWidth } = scrollRef.current;
+      const scrollAmount = direction === 'left' ? -clientWidth * 0.6 : clientWidth * 0.6;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="works-section">
       <SectionLabel index={1} total={2} label="PRODUCTS" />
-      <div className="products-list">
-        {projects.map((project, idx) => (
-          <ProductItem key={idx} project={project} index={idx} total={projects.length} />
-        ))}
+      
+      <div className="products-container-wrapper">
+        <AnimatePresence>
+          {showLeftArrow && (
+            <motion.button 
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              className="scroll-arrow left"
+              onClick={() => scroll('left')}
+              aria-label="Scroll left"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.button>
+          )}
+        </AnimatePresence>
+
+        <div className="products-list" ref={scrollRef}>
+          {projects.map((project, idx) => (
+            <ProductItem key={idx} project={project} index={idx} total={projects.length} />
+          ))}
+        </div>
+
+        <AnimatePresence>
+          {showRightArrow && (
+            <motion.button 
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              className="scroll-arrow right"
+              onClick={() => scroll('right')}
+              aria-label="Scroll right"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
