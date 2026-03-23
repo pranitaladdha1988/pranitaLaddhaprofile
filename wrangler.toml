@@ -7,6 +7,5 @@ main = "public/_worker.js"
 [assets]
 directory = "dist"
 
-[[kv_namespaces]]
-binding = "LEADS_KV"
-id = "<your-kv-namespace-id>" # To be created by user in Cloudflare dashboard
+# Bindings (like KV) should be set in the Cloudflare Dashboard
+# to avoid hardcoding IDs in this file.
