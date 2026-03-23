@@ -101,11 +101,9 @@ export default {
       // Default: Serve static assets from Cloudflare Pages
       let response = await env.ASSETS.fetch(request);
       
-      // SPA Routing: If the response is a 404 and it's not a file request (no extension),
-      // we serve index.html to allow React Router to handle the page.
+      // SPA Routing: Redirect subpage refreshes to the home page (as requested)
       if (response.status === 404 && !url.pathname.includes('.')) {
-        const indexUrl = new URL('/index.html', url.origin);
-        return env.ASSETS.fetch(new Request(indexUrl, request));
+        return Response.redirect(`${url.origin}/`, 302);
       }
 
       return response;
