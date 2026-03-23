@@ -407,7 +407,7 @@ button {
 
 /* Sections */
 .works-section, .summary-section, .about-section {
-  padding: var(--section-gap) 0;
+  padding: 60px 0 var(--section-gap) 0;
   border-bottom: 1px solid var(--accent-color);
 }
 
