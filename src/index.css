@@ -419,7 +419,6 @@ button {
   margin-bottom: 60px;
 }
 
-/* Products - Horizontal Scroll Architecture */
 .products-container-wrapper {
   position: relative;
   width: 100%;
@@ -431,12 +430,9 @@ button {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  gap: 10vw;
+  gap: 5vw;
   padding: 40px 0;
-  margin: 0 calc(-1 * var(--container-padding));
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .products-list::-webkit-scrollbar {
@@ -447,18 +443,18 @@ button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background: var(--bg-color);
   border: 1px solid var(--accent-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 20;
   color: var(--fg-color);
   transition: var(--transition-smooth);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-arrow:hover {
@@ -468,24 +464,19 @@ button {
   transform: translateY(-50%) scale(1.1);
 }
 
-.scroll-arrow svg {
-  width: 24px;
-  height: 24px;
-}
-
 .scroll-arrow.left {
-  left: calc(var(--container-padding) - 80px);
+  left: -25px; /* Half outside the container to avoid overlapping text */
 }
 
 .scroll-arrow.right {
-  right: calc(var(--container-padding) - 80px);
+  right: -25px; /* Half outside the container */
 }
 
 .product-item {
-  flex: 0 0 70vw;
+  flex: 0 0 100%; /* Take full width of the container for better alignment */
   scroll-snap-align: start;
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 80px 1fr;
   padding: 60px 40px !important;
   border: 1px solid var(--accent-color);
   background: transparent;
